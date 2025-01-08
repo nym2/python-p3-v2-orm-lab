@@ -115,22 +115,10 @@ class Review:
 
     @classmethod
     def find_by_id(cls, id):
-        """Return a Review object corresponding to the table row matching the specified primary key."""
-    
-    # Check if the id is already cached in cls.all
-        if id in cls.all:
-            return cls.all[id]
-    
-    # Query the database to fetch the row corresponding to the given id
         sql = "SELECT * FROM reviews WHERE id = ?"
         row = CURSOR.execute(sql, (id,)).fetchone()
-    
-    # If a row is found, return the corresponding Review instance
-        if row:
-            return cls.instance_from_db(row)
-    
-    # If no row is found, return None
-        return None
+        return cls.instance_from_db(row) if row else None
+
 
 
     def update(self):
